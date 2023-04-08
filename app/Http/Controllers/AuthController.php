@@ -134,17 +134,20 @@ class AuthController extends Controller
                     'full_name' => $user->name,
                     'random' => $random
                 );
-                $a = $request['email'];
-                $qr = QrCode::format('png')->size(200)->generate("localhost:8000/correo/". $a);
-
+              
                 // Enviar el correo electrónico con el código QR adjunto
-                Mail::send('emails.reset_password', $userData, function ($message) use ($userData, $qr) {
-                    $message->to($userData['email'], $userData['full_name']);
-                    $message->subject('Solicitud de restablecimiento de contraseña');
-                    $message->attachData($qr, 'codigo_qr.png', [
-                        'mime' => 'image/png',
-                    ]);
-                });
+                Mail::send('emails.reset_password', $userData, function ($message) use ($userData) {
+                    //     $message->from('no-reply@laravel.vue.learning', 'Password Request');
+                            // $message->sender('john@johndoe.com', 'John Doe');
+                            $message->to($userData['email'], $userData['full_name']);
+                            // $message->cc('john@johndoe.com', 'John Doe');
+                            // $message->bcc('john@johndoe.com', 'John Doe');
+                            // $message->replyTo('john@johndoe.com', 'John Doe');
+                            $message->subject('Solicitud de restablecimiento de contraseña');
+                            // $message->priority(3);
+                            // $message->attach('pathToFile');
+                        });
+        
                
                 if (Mail::failures()) {
                     return response()->json([
