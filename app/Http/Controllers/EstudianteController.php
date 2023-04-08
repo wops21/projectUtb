@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Estudiante;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Database\Eloquent\Builder;
-use Symfony\Component\HttpKernel\HttpCache\Esi;
-
 class EstudianteController extends Controller
 {   
+    public function getEstudiantesAll(){
+        $encargadoCarrera = Auth::user()->id_carrera;
+        $estudiante = Estudiante::where('id_carrera',$encargadoCarrera)->where('esEstado',1)->where('esGrado','estudiante')->get();
+        return response()->json($estudiante,200);
+    }
 
     public function getEstudianteAsignacionModal(){
         $estudiante = Estudiante::where('esEstado',1)->where('esAsignacion','completado')->get();
@@ -104,6 +107,28 @@ class EstudianteController extends Controller
         return response()->json($estudiante,200);
     }
 
+    public function registroEstudiantes(Request $request){
+        
+        $id_carrer = Auth::user()->id_carrera;
+
+        $estudiante = new Estudiante();
+        $estudiante->id_carrera = $id_carrer;
+        $estudiante->esNombres = $request->esNombres;
+        $estudiante->esPaterno = $request->esPaterno;
+        $estudiante->esMaterno = $request->esMaterno;
+        $estudiante->esCelular = $request->esCelular;
+        $estudiante->esGenero = $request->esGenero;;
+        $estudiante->esGrado = 'estudiante';
+        if($estudiante->save()){
+            return response()->json($estudiante, 200);
+        } else {
+            return response()->json([
+                'message' => 'Ocurrio un error, intente otra vez por favor ',
+                'status_code' => 500
+            ], 500);
+        }
+
+    }
     public function store(Request $request){
         $request->validate([
             'id_carrera' => 'required',
@@ -122,6 +147,7 @@ class EstudianteController extends Controller
         $estudiante->esCelular = $request->esCelular;
         $estudiante->esGenero = $request->esGenero;
         $estudiante->esTituloProyecto = $request->esTituloProyecto;
+        $estudiante->esGrado = $request->esGrado;
 
         if($estudiante->save()){
             return response()->json($estudiante, 200);

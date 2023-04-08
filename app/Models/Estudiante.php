@@ -38,4 +38,11 @@ class Estudiante extends Model
     public function relacionObservacion(){
         return $this->hasMany(ObservacionEstudiante::class, 'id_estudiante');
     }
+
+    public function relacionAsignacionEvento(){
+        return $this->hasMany(AsignacionEvento::class, 'id_estudiante');
+    }
+    public function estudiantesT(){
+        return $this->belongsTo(Evento::class);
+    }
 }

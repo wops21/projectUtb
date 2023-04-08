@@ -402,7 +402,7 @@ export default {
       carreras: "getCarreras",
       allCarreras: "getAllCarreras",
     }),
-  },
+  }, 
   mounted() {
     this.fechaActual = this.printDate();
     this.loadSolicitudes();

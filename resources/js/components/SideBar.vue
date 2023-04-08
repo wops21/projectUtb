@@ -159,7 +159,7 @@ export default {
     ],
   }),
   mounted() {
-    const theme = localStorage.getItem("dark_theme");
+    const theme = localStorage.getItem("dark_theme") || "light_theme";
     if (theme) {
       if (theme === "true") {
       this.darkModeIcon = "mdi-moon-waning-crescent"

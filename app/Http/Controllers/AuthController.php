@@ -8,20 +8,36 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Contracts\Mail\Mailable;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+
 class AuthController extends Controller
 {
     //
+  public function profile(Request $request) {
+        if ($request->user()) {
+            return response()->json($request->user(), 200);
+        }
+
+        return response()->json([
+            'message' => 'Not loggedin',
+            'status_code' => 500
+        ], 500);
+    }
 
     public function register(Request $request) {
         $request->validate([
-            'name' => 'required|string|max:255',
+            'nombres' => 'required|string|max:255',
             'email' => 'required|string|email|unique:users', 
             'password' => 'required|string|confirmed'
         ]);
 
         $user = new User();
-        $user->name = $request->name;
+        $user->id_carrera = $request->id_carrera;
+        $user->nombres = $request->nombres;
+        $user->apellidoPaterno = $request->apellidoPaterno;
+        $user->apellidoMaterno = $request->apellidoMaterno;
         $user->email = $request->email;
+        $user->role = $request->role;
         $user->password = bcrypt($request->password);
 
         if ($user->save()) {
@@ -51,13 +67,21 @@ class AuthController extends Controller
         }
 
         $user = $request->user();
-
-        if ($user->role == 'administrator') {
-            $tokenData = $user->createToken('Personal Access Token', ['administrator']);
-        } else {
-            $tokenData = $user->createToken('Personal Access Token', ['user']);
-        }
-
+     
+        switch($user){ case($user->role == 'user'):
+                $tokenData = $user->createToken('Personal Access Token', ['user']);
+                break;
+            case ($user->role == 'administratorMain'):
+                $tokenData = $user->createToken('Personal Access Token', ['administratorMain']);
+                break;
+            case($user->role == 'administratorMainSem'): 
+                $tokenData = $user->createToken('Personal Access Token', ['administratorMainSem']);
+               break;
+            case($user->role == 'administratorSem'):
+                $tokenData = $user->createToken('Personal Access Token', ['administratorSem']);
+              break;
+            default: return 'error';   
+        };
         $token = $tokenData->token;
 
         if ($request->remember_me) {
@@ -110,19 +134,18 @@ class AuthController extends Controller
                     'full_name' => $user->name,
                     'random' => $random
                 );
+                $a = $request['email'];
+                $qr = QrCode::format('png')->size(200)->generate("localhost:8000/correo/". $a);
 
-                Mail::send('emails.reset_password', $userData, function ($message) use ($userData) {
-            //     $message->from('no-reply@laravel.vue.learning', 'Password Request');
-                    // $message->sender('john@johndoe.com', 'John Doe');
+                // Enviar el correo electrónico con el código QR adjunto
+                Mail::send('emails.reset_password', $userData, function ($message) use ($userData, $qr) {
                     $message->to($userData['email'], $userData['full_name']);
-                    // $message->cc('john@johndoe.com', 'John Doe');
-                    // $message->bcc('john@johndoe.com', 'John Doe');
-                    // $message->replyTo('john@johndoe.com', 'John Doe');
                     $message->subject('Solicitud de restablecimiento de contraseña');
-                    // $message->priority(3);
-                    // $message->attach('pathToFile');
+                    $message->attachData($qr, 'codigo_qr.png', [
+                        'mime' => 'image/png',
+                    ]);
                 });
-
+               
                 if (Mail::failures()) {
                     return response()->json([
                         'message' => 'Some error occurred, Please try again',

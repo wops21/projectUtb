@@ -4,8 +4,8 @@ import mutations from './mutations';
 
 const state = {
     isLoggedIn: null,
-    apiURL: 'https://infoutb.fun/api',
-        serverPath: 'https://infoutb.fun',
+    apiURL: 'https://infoutb.fun/',
+        serverPath: 'https://infoutb.fun/',
         profile: {},
         isLoggedIn: null,
 }

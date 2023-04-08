@@ -113,7 +113,7 @@ class ProgramacionController extends Controller
 
         ]);
         $now = Carbon::now();
-        $fechaActual = $now->format('Y-m-d');
+        $fechaActual = $now->format('Y-m-d'); 
   $nroTutor = DB::table('solicituds')->where('id_estudiante', $request->id_estudiante)->where('solEstado',1)->where('respuestaSolicitud','completado')->count('id');
         $nroTribunal = DB::table('asignacion_tribunals')->where('id_estudiante', $request->id_estudiante)
             ->where('asiEstado', '1')->count('id_tribunal');

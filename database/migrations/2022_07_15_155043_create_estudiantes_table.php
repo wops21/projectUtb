@@ -20,14 +20,17 @@ class CreateEstudiantesTable extends Migration
             $table->string('esPaterno',90);
             $table->string('esMaterno',90);
             $table->string('esCelular',60);
-            $table->string('esTituloProyecto',255);
+            $table->string('esCarnet',80);
+            $table->string('esTituloProyecto',255)->nullable();
             $table->string('esGenero', 60);
+            $table->string('esCorreo');
             $table->boolean('esEstado')->default(1);
             $table->string('esFinal')->default('realizar solicitud tutor')->nullable();
             $table->string('habilitacion')->default('primer panelP');
             $table->string('esSolicitud')->default('falta');
             $table->string('esAsignacion')->default('falta');
             $table->string('confirmacionAsignacion')->default('falta');
+            $table->string('esGrado')->nullable();
             $table->foreign('id_carrera')->references('id')->on('carreras');
             $table->timestamps();
         });

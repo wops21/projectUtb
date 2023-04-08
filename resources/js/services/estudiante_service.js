@@ -1,5 +1,14 @@
 import {http} from './http_service';
 
+//estudiantes sin egresar
+
+export function getAllEstudiantes(){
+    return http().get('/allEstudiantes');
+}
+export function createAllEstudiantes(data){
+    return http().post('/registroEstudiantes',data);
+}
+//estudiantes egresados
 export function getEstudiantes()
 {
     return http().get('/getEstudiantes')

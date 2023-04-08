@@ -1,6 +1,6 @@
 <template>
     <v-app dark>
-    <v-content style="background:#253139">
+    <v-main style="background:#253139">
       <v-container class="fill-height" fluid>
         <v-row align="center" justify="center">
           <v-col cols="12" sm="5" md="5">
@@ -49,7 +49,7 @@
           </v-col>
         </v-row>
       </v-container>
-    </v-content>
+    </v-main>
   </v-app>
 </template>
 <script>
@@ -70,9 +70,27 @@ export default {
       methods:{
         login: async function() {      
                   try {
-             await auth.login(this.user);
-              this.$router.push('/sideBar/'); 
-          
+           const response = await auth.login(this.user);
+
+           switch(response.token_scope){
+    case 'administratorMain':
+        this.$router.push('/sidebar-admin/'); 
+        break;
+    case 'administratorSem':
+        this.$router.push('/admin-s');                 
+        break;
+    case 'administratorMainSem':
+        this.$router.push('/admin-e');                 
+        break;
+    case 'user':
+        this.$router.push('/client-n');                 
+        break;
+    default:
+        this.$router.push('/');                 
+        break;
+}
+   
+            
                 } catch (error) {
                    console.log(error)
                 }

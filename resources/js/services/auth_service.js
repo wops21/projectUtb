@@ -8,6 +8,9 @@ export function resetPasswordRequest(user) {
 export function resetPassword(user) {
     return http().post('/auth/reset-password', user);
 }
+export function getProfile() {
+    return http().get('/auth/profile');
+}
 
 export async function login(user) {
     const response = await http().post('/auth/login', user);
@@ -29,7 +32,6 @@ export function logout() {
 export function setToken(user){
     const token = jwt.sign({ user: user }, 'laravelvuespaabfjdsafjasljsoftgear2019');
     localStorage.setItem('larave-vue-spa-token', token);
-//   this.$store.dispatch('authenticate', user.user);
    store.dispatch("GET_AUTHENTICATE", user.user);
 }
 export function getAccessToken() {
@@ -41,6 +43,7 @@ export function getAccessToken() {
     const tokenData = jwt.decode(token);
     return tokenData.user.access_token;
 }
+
 export function getUserRole() {
     const token = localStorage.getItem('larave-vue-spa-token');
     if (!token) {
