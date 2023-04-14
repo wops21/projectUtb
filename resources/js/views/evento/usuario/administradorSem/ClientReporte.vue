@@ -96,7 +96,7 @@ export default {
         this.items = rows
       })
     },
-   async cargarDatos(){
+   async cargarDatos(){ 
     try {
       const formData = new FormData();
       formData.append("items",JSON.stringify(this.items) );

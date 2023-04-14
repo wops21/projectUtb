@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\AsignacionEvento;
+use App\Models\AsignacionPuntos;
 use App\Models\Estudiante;
 use App\Models\Evento;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
@@ -58,7 +59,7 @@ class AsignacionEventoController extends Controller
         $detalle = DB::table('asignacion_eventos')->join('estudiantes', 'asignacion_eventos.id_estudiante', '=', 'estudiantes.id')
         ->join('eventos', 'asignacion_eventos.id_evento', '=', 'eventos.id')
         ->select('estudiantes.esNombres', DB::raw('COUNT(DISTINCT asignacion_eventos.id) as total'), DB::raw('SUM(eventos.horaAcademica) as HoraAcademica'))->groupBy('estudiantes.esNombres')->paginate(5);
-       
+        
        return response()->json($detalle, 200);
     }
     public function inscritosEventos(){
@@ -93,13 +94,22 @@ class AsignacionEventoController extends Controller
         $asignacion->id_evento = $request->id_evento;
         $asignacion->fechaAsignacion = $fechaActual;
         $carnetEs = Estudiante::where('id',$asignacion->id_estudiante)->value('esCarnet');
-     
+        
         $asignacion->idEBycrypt = encrypt($carnetEs);
         
 
-      //  $asignacion->save();
-     
-  //    return $myEncript;
+         $asignacion->save();
+        
+         if($request->selected){
+            foreach(json_decode($request->selected) as $item){
+                $puntos = new AsignacionPuntos();
+                $puntos->id_asignacion_evento = $asignacion->id;
+                $puntos->id_horario_docente = $item->id;
+                $puntos->cantidad_puntos = $item->cantidad_puntos;
+                $puntos->save();
+            }
+         }
+
        if($asignacion->save()){
         $ultimaAsignacion = AsignacionEvento::where('id_evento',$asignacion->id_evento)
         ->where('id_estudiante',$asignacion->id_estudiante)->orderBy('id','desc')->limit(1)->value('id');

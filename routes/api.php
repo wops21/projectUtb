@@ -171,7 +171,11 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/eventosActivos', [App\Http\Controllers\EventoController::class, 'eventosActivos']);
     Route::get('/allEstudiantes',[App\Http\Controllers\EstudianteController::class, 'getEstudiantesAll']);
     Route::post('/registroEstudiantes',[App\Http\Controllers\EstudianteController::class, 'registroEstudiantes']);
-
+    Route::post('/horarios', [App\Http\Controllers\HorarioController::class, 'store']);
+    Route::delete('deleteTable', [App\Http\Controllers\HorarioController::class, 'deleteTable']);
+    Route::get('/buscadorHorario', [App\Http\Controllers\HorarioController::class, 'buscarDocente']);
+    Route::get('/getParalelo', [App\Http\Controllers\HorarioController::class, 'getParalelo']);
+    
   });
 });
 //admin Event

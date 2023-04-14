@@ -67,7 +67,7 @@
                                                                             <tr>
                                                                                 <td><a href="#"
                                                                                         style="text-decoration:none;"><img
-                                                                                            src="{{ asset('images/logo.png') }}"
+                                                                                            src="{{ asset('images/logo_1_0.png') }}"
                                                                                             style="width: 200px;" /></a>
                                                                                     </multiline>
                                                                                 </td>
@@ -87,8 +87,7 @@
                                                             <tr>
                                                                 <td style="font-family:'Open Sans', sans-serif, Verdana; font-size:20px; color:#3b3a3a; font-weight:bold; line-height:50px; text-transform:none;"
                                                                     mc:edit="fm-40" valign="top" align="center">
-                                                                    <multiline>Solicitud de restablecimiento de
-                                                                        contraseña</multiline>
+                                                                    <multiline>Información de inscripcion</multiline>
                                                                 </td>
                                                             </tr>
                                                             <tr>
@@ -106,7 +105,8 @@
                                                             <tr>
                                                                 <td style="font-family:'Open Sans', sans-serif, Verdana; font-size:14px; color:#3b3a3a; font-weight:normal; line-height:24px;"
                                                                     mc:edit="fm-41" valign="top" align="left">
-                                                                    <multiline>Hemos confirmado su inscripcion para el evento {{ $nombreEvento }}
+                                                                    <multiline>Hemos confirmado su inscripcion para el evento <strong> {{ $nombreEvento }}</strong> asi mismo se le envia
+                                                                        el codigo qr para verificar su registro.
                                                                     </multiline>
                                                                 </td>
                                                             </tr>

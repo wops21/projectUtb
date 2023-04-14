@@ -7,9 +7,9 @@ import Recuperar from "./views/autetificacion/Recuperar.vue";
 import Error from "./views/autetificacion/Error.vue";
 import RecuperarContraseña from "./views/autetificacion/RecuperarContraseña.vue";
 import SideBarClient from "./components/SideBarClient.vue";
-import QrIndex from "./views/qrGenerator/QrIndex.vue"
+import QrIndex from "./views/qrGenerator/QrIndex.vue";
 import * as auth from "./services/auth_service";
-import * as eventService from './services/evento_service';
+import * as eventService from "./services/evento_service";
 Vue.use(Router);
 const routes = [
     {
@@ -134,7 +134,7 @@ const routes = [
                 next("/");
             } else if (auth.getUserRole() === "administratorMain") {
                 next();
-            } 
+            }
         },
     },
     {
@@ -147,60 +147,57 @@ const routes = [
                 name: "clientNormalInicio",
                 component: () =>
                     import("./views/evento/usuario/ClientNormalInicio.vue"),
-                    beforeEnter(to, from, next) {
-                        if (
-                              auth.getUserRole() == "user" || auth.getUserRole() == "administratorSem" 
-                             
-                          ) {
-                              next();
-                          } else {
-                              if(auth.getUserRole() == 'administratorMainSem'){
-                                  next("/admin-e");
-                              }
-                          }
-                      },
+                beforeEnter(to, from, next) {
+                    if (
+                        auth.getUserRole() == "user" ||
+                        auth.getUserRole() == "administratorSem"
+                    ) {
+                        next();
+                    } else {
+                        if (auth.getUserRole() == "administratorMainSem") {
+                            next("/admin-e");
+                        }
+                    }
+                },
             },
-            
+
             {
                 path: "/admin-s",
                 name: "AdminSemInicio",
                 component: () =>
-                    import("./views/evento/usuario/administradorSem/ClientInicio.vue"),
-                    beforeEnter(to, from, next) {
-                      if (
-                            auth.getUserRole() == "administratorSem" 
-                           
-                        ) {
-                            next();
-                        } else {
-                            if(auth.getUserRole() == 'administratorMainSem'){
-                                next("/admin-e");
-                            }else if( auth.getUserRole() == 'user'){
-                                next("/client-n");
-                            }
+                    import(
+                        "./views/evento/usuario/administradorSem/ClientInicio.vue"
+                    ),
+                beforeEnter(to, from, next) {
+                    if (auth.getUserRole() == "administratorSem") {
+                        next();
+                    } else {
+                        if (auth.getUserRole() == "administratorMainSem") {
+                            next("/admin-e");
+                        } else if (auth.getUserRole() == "user") {
+                            next("/client-n");
                         }
-                    },
-           
+                    }
+                },
             },
             {
                 path: "/admin-e",
                 name: "adminEventInicio",
                 component: () =>
-                    import("./views/evento/usuario/administradorEvento/AdministradorEventoInicio.vue"),
-                    beforeEnter(to, from, next) {
-                        if (
-                              auth.getUserRole() == "administratorMainSem" 
-                             
-                          ) {
-                              next();
-                          } else {
-                              if(auth.getUserRole() == 'administratorSem'){
-                                  next("/admin-s");
-                              }else if( auth.getUserRole() == 'user'){
-                                  next("/client-n");
-                              }
-                          }
-                      },
+                    import(
+                        "./views/evento/usuario/administradorEvento/AdministradorEventoInicio.vue"
+                    ),
+                beforeEnter(to, from, next) {
+                    if (auth.getUserRole() == "administratorMainSem") {
+                        next();
+                    } else {
+                        if (auth.getUserRole() == "administratorSem") {
+                            next("/admin-s");
+                        } else if (auth.getUserRole() == "user") {
+                            next("/client-n");
+                        }
+                    }
+                },
             },
             {
                 path: "/clientAsignacion",
@@ -209,20 +206,17 @@ const routes = [
                     import(
                         "./views/evento/usuario/administradorSem/ClientAsignacion.vue"
                     ),
-                    beforeEnter(to, from, next) {
-                        if (
-                              auth.getUserRole() == "administratorSem" 
-                             
-                          ) {
-                              next();
-                          } else {
-                              if(auth.getUserRole() == 'administratorMainSem'){
-                                  next("/admin-e");
-                              }else if( auth.getUserRole() == 'user'){
-                                  next("/client-n");
-                              }
-                          }
-                      },
+                beforeEnter(to, from, next) {
+                    if (auth.getUserRole() == "administratorSem") {
+                        next();
+                    } else {
+                        if (auth.getUserRole() == "administratorMainSem") {
+                            next("/admin-e");
+                        } else if (auth.getUserRole() == "user") {
+                            next("/client-n");
+                        }
+                    }
+                },
             },
             {
                 path: "/clientReporte",
@@ -231,6 +225,12 @@ const routes = [
                     import(
                         "./views/evento/usuario/administradorSem/ClientReporte.vue"
                     ),
+            },
+            {
+                path: "/clientHorario",
+                name: "ClientHorario",
+                component: () =>
+                    import("./views/evento/usuario/CargarHorario.vue"),
             },
         ],
         beforeEnter(to, from, next) {
@@ -248,11 +248,10 @@ const routes = [
         },
     },
     {
-        path: '/busqueda-qr/:ci/:idE/:idA',
-        name: 'getQr',
+        path: "/busqueda-qr/:ci/:idE/:idA",
+        name: "getQr",
         component: QrIndex,
         //props: true,
-   
     },
     {
         path: "*",

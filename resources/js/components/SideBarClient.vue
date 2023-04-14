@@ -126,6 +126,12 @@ export default {
       },
       {
         action: "assignment",
+        title: "Cargar horarios",
+      route: "/clientHorario",
+        role: "user",
+      },
+      {
+        action: "assignment",
         title: "Estudiantes",
       route: "/clientAsignacion",
         role: "administratorSem",

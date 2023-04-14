@@ -20,10 +20,7 @@
 </head>
 
 <body marginwidth="0" marginheight="0" style="margin-top: 0; margin-bottom: 0; padding-top: 0; padding-bottom: 0; width: 100%; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%;" offset="0" topmargin="0" leftmargin="0">
-    <div >
-        {!! QrCode::size(100)->generate(Request::url("www.google.com")); !!}
-        <p>Scan me to return to the original page.</p>
-    </div>
+   
     <table data-bgcolor="BodyBg" data-module="01-Top Space Part" width="100%" cellspacing="0" cellpadding="0" border="0" bgcolor="#edf2ff" align="center" class="">
         <tbody>
             <tr>
@@ -62,7 +59,7 @@
                                                               <table width="170" cellspacing="0" cellpadding="0" border="0" align="center">
                                                                 <tbody>
                                                                   <tr>
-                                                                    <td><a href="#" style="text-decoration:none;"><img src="{{ asset('images/logo.png') }}" style="width: 200px;" /></a></multiline></td>
+                                                                    <td><a href="#" style="text-decoration:none;"><img src="{{ asset('images/logo_1_0.png') }}" style="width: 200px;" /></a></multiline></td>
                                                                   </tr>
                                                                 </tbody>
                                                               </table>

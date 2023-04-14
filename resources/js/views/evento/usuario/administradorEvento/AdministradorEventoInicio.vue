@@ -95,7 +95,7 @@
                   label="Tipo de evento"
                   persistent-hint
                   single-line
-                  :rules="[v => !!v || 'Debe seleccionar una carrera']"
+                  :rules="[v => !!v || 'Debe seleccionar un tipo de evento']"
                   
                   required
                 ></v-select>
@@ -114,9 +114,9 @@
                 <v-col cols="12" sm="6" md="6">  
         <v-text-field
               v-model="eventoData.orador"
-              label="Orador"
+              label="Expositor"
               :rules="[
-                    (v) => !!v || 'Debe seleccionar un tipo de evento',
+                    (v) => !!v || 'Debe ingresar un expositor',
                     (v) => /[aA-zZ]$/.test(v),
                   ]"
                       required
@@ -255,9 +255,9 @@
                 <v-col cols="12" sm="6" md="6">  
         <v-text-field
               v-model="editEvento.orador"
-              label="Orador"
+              label="Expositor"
               :rules="[
-                    (v) => !!v || 'Debe seleccionar un tipo de evento',
+                    (v) => !!v || 'Debe agregar un expositor',
                     (v) => /[aA-zZ]$/.test(v),
                   ]"
                       required

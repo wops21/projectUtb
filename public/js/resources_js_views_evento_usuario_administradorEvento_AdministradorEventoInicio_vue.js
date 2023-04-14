@@ -1507,7 +1507,8 @@ var render = function () {
                                   rules: [
                                     function (v) {
                                       return (
-                                        !!v || "Debe seleccionar una carrera"
+                                        !!v ||
+                                        "Debe seleccionar un tipo de evento"
                                       )
                                     },
                                   ],
@@ -1567,13 +1568,10 @@ var render = function () {
                             [
                               _c("v-text-field", {
                                 attrs: {
-                                  label: "Orador",
+                                  label: "Expositor",
                                   rules: [
                                     function (v) {
-                                      return (
-                                        !!v ||
-                                        "Debe seleccionar un tipo de evento"
-                                      )
+                                      return !!v || "Debe ingresar un expositor"
                                     },
                                     function (v) {
                                       return /[aA-zZ]$/.test(v)
@@ -2148,13 +2146,10 @@ var render = function () {
                             [
                               _c("v-text-field", {
                                 attrs: {
-                                  label: "Orador",
+                                  label: "Expositor",
                                   rules: [
                                     function (v) {
-                                      return (
-                                        !!v ||
-                                        "Debe seleccionar un tipo de evento"
-                                      )
+                                      return !!v || "Debe agregar un expositor"
                                     },
                                     function (v) {
                                       return /[aA-zZ]$/.test(v)
