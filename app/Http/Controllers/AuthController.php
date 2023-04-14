@@ -38,7 +38,7 @@ class AuthController extends Controller
         $user->apellidoMaterno = $request->apellidoMaterno;
         $user->email = $request->email;
         $user->role = $request->role;
-        $user->password = $request->password;
+        $user->password = bcrypt($request->password);
 
         if ($user->save()) {
             return response()->json([
@@ -178,8 +178,7 @@ class AuthController extends Controller
                 'status_code' => 401
             ], 401);
         } else {
-         //   $user->password = bcrypt(trim($request->password));
-         $user->password = $request->password;
+            $user->password = bcrypt(trim($request->password));
             $user->verification_code = Null;
 
             if ($user->save()) {
