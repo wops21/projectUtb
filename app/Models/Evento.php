@@ -18,7 +18,8 @@ class Evento extends Model
         'lugar',
         'horaAcademica',
         'eventEstado',
-        'orador'
+        'orador',
+        'costo'
     ];
 
     public function relacionAsignacionEvento(){

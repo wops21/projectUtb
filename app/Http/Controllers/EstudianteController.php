@@ -8,6 +8,14 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 class EstudianteController extends Controller
 {   
+
+    public function todosEstudiantes(){
+        $estudiante = Estudiante::with('relacion_carrera')->where('esEstado',1)->when(request('carrera'), function ($query) {
+            $query->Where('id_carrera','like','%' . request('carrera') . '%');
+        }, )->when(request('search'), function ($query) {
+            $query->Where('esPaterno','like','%' . request('search') . '%' . '')->orWhere('esMaterno','like','%' . request('search') . '%' . '');})->orderBy('id','desc')->paginate(5);
+        return response()->json($estudiante,200);
+    }
     public function getEstudiantesAll(){
         $encargadoCarrera = Auth::user()->id_carrera;
         $estudiante = Estudiante::where('id_carrera',$encargadoCarrera)->where('esEstado',1)->where('esGrado','estudiante')->get();

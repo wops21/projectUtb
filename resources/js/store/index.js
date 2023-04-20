@@ -9,6 +9,7 @@ import panel1 from './modules/panel1';
 import estudiantes from './modules/estudiantes';
 import docentes from './modules/docentes'
 import carreras from './modules/carreras'
+import eventos from './modules/eventos'
 export default new Vuex.Store({
 
     modules: {
@@ -18,6 +19,7 @@ export default new Vuex.Store({
         panel1,
         estudiantes,
         docentes,
-        carreras
+        carreras,
+        eventos
     }
 })

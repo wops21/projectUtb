@@ -5,7 +5,6 @@ use Illuminate\Support\Facades\Route;
 Route::post('oauth/token', '\Laravel\Passport\Http\Controllers\AccessTokenController@issueToken');
 
 Route::group(['prefix' => 'auth'], function () {
-  Route::post('register', [App\Http\Controllers\AuthController::class, 'register']);
 
   Route::post('login', [App\Http\Controllers\AuthController::class, 'login']);
   Route::get('getEstudiantes', [App\Http\Controllers\EstudianteController::class, 'getEstudiantes']);
@@ -167,7 +166,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     //asignacion seminarios
     Route::post('/asignacionEvento', [App\Http\Controllers\AsignacionEventoController::class, 'store']);
     Route::get('/userAsignacion', [App\Http\Controllers\AsignacionEventoController::class, 'userAsignacion']);
-    
+    Route::post('/asignacionEvento/{id}', [App\Http\Controllers\AsignacionEventoController::class, 'update']);
+
     Route::get('/eventosActivos', [App\Http\Controllers\EventoController::class, 'eventosActivos']);
     Route::get('/allEstudiantes',[App\Http\Controllers\EstudianteController::class, 'getEstudiantesAll']);
     Route::post('/registroEstudiantes',[App\Http\Controllers\EstudianteController::class, 'registroEstudiantes']);
@@ -175,7 +175,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::delete('deleteTable', [App\Http\Controllers\HorarioController::class, 'deleteTable']);
     Route::get('/buscadorHorario', [App\Http\Controllers\HorarioController::class, 'buscarDocente']);
     Route::get('/getParalelo', [App\Http\Controllers\HorarioController::class, 'getParalelo']);
-    
+    Route::get('/reporteAsignaciones', [App\Http\Controllers\AsignacionEventoController::class, 'reporteAsignaciones']);
   });
 });
 //admin Event
@@ -192,20 +192,40 @@ Route::group(['middleware' => 'auth:api'], function () {
    //tipo de evento
    Route::get('/tipoEvento', [App\Http\Controllers\TipoEventoController::class, 'index']);
    Route::post('/tipoEvento', [App\Http\Controllers\TipoEventoController::class, 'store']);
-   Route::get('/inscritosEventos',[App\Http\Controllers\AsignacionEventoController::class,'inscritosEventos']);
+   Route::delete('/tipoEvento/{tipo}', [App\Http\Controllers\TipoEventoController::class, 'destroy']);
+   Route::put('/tipoEvento/{tipo}', [App\Http\Controllers\TipoEventoController::class, 'update']);
 
-  });
+   
+   Route::get('/inscritosEventos',[App\Http\Controllers\AsignacionEventoController::class,'inscritosEventos']);
+   Route::get('/todosAsignados/{estudiante}',[App\Http\Controllers\AsignacionEventoController::class,'todosEventosEstudiantes']);
+   Route::get('/todosEstudiantes',[App\Http\Controllers\EstudianteController::class, 'todosEstudiantes']);
+   Route::get('/carreras',[App\Http\Controllers\CarreraController::class, 'index']);
+
+     });
 });
 
 Route::group(['middleware' => 'auth:api'], function () {
   Route::group(['middleware' => 'scope:administratorSem'], function () {
     //tipo eventos
     Route::get('/asignacionEvento', [App\Http\Controllers\AsignacionEventoController::class, 'index']);
-    Route::get('/carreras',[App\Http\Controllers\CarreraController::class, 'index']);
     Route::put('/entregarCertificado/{asignacion}', [App\Http\Controllers\AsignacionEventoController::class, 'entregarCertificado']);
     Route::post('/controls',[App\Http\Controllers\ControllerControl::class, 'store']);
   });
 });
+Route::group(['middleware' => 'auth:api'], function () {
+  Route::group(['middleware' => 'scope:administratorSem,administratorMainSem'], function () {
+    //tipo eventos
+    Route::get('/asignacionEvento', [App\Http\Controllers\AsignacionEventoController::class, 'index']);
+   Route::get('/carreras',[App\Http\Controllers\CarreraController::class, 'index']);
+    Route::put('/entregarCertificado/{asignacion}', [App\Http\Controllers\AsignacionEventoController::class, 'entregarCertificado']);
+    Route::post('/controls',[App\Http\Controllers\ControllerControl::class, 'store']);
+    Route::post('/registerUser', [App\Http\Controllers\AuthController::class, 'register']);
+    Route::get('/users', [App\Http\Controllers\AuthController::class, 'index']);
 
-Route::get('/test/{id}', [App\Http\Controllers\AsignacionEventoController::class, 'totalHoras']);
+  });
+});
+
+Route::get('/test', [App\Http\Controllers\AsignacionEventoController::class, 'detalleSeminario']);
 Route::get('/getQr/{ci}/{asignacion}/{id}',[App\Http\Controllers\QrGenerator::class, 'getQr']);
+
+Route::get('/puntosAsignados', [App\Http\Controllers\AsignacionEventoController::class, 'puntosAsignados']);

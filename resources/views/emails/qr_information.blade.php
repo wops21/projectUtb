@@ -99,14 +99,14 @@
                                                                 <td style="font-family:'Open Sans', sans-serif, Verdana; font-size:14px; color:#3b3a3a; font-weight:normal; line-height:24px;"
                                                                     mc:edit="fm-41" valign="top" align="left">
                                                                     <strong>Hola
-                                                                        {{ ucfirst($nombreEstudiante) }},</strong>
+                                                                        {{ ucfirst($nombreEstudiante) }} {{ ucfirst($paternoEstudiante) }} {{ ucfirst($maternoEstudiante) }},</strong>
                                                                 </td>
                                                             </tr>
                                                             <tr>
                                                                 <td style="font-family:'Open Sans', sans-serif, Verdana; font-size:14px; color:#3b3a3a; font-weight:normal; line-height:24px;"
                                                                     mc:edit="fm-41" valign="top" align="left">
-                                                                    <multiline>Hemos confirmado su inscripcion para el evento <strong> {{ $nombreEvento }}</strong> asi mismo se le envia
-                                                                        el codigo qr para verificar su registro.
+                                                                    <multiline>Hemos confirmado su inscripción para el evento <strong> {{ $nombreEvento }}</strong> asi mismo se le envia
+                                                                        el Código QR para verificar su registro.
                                                                     </multiline>
                                                                 </td>
                                                             </tr>

@@ -160,7 +160,18 @@ const routes = [
                     }
                 },
             },
-
+            {
+                path: "/client-np",
+                name: "clientNormalPuntos",
+                component:  () =>
+                import("./views/evento/usuario/PuntosRegistrados.vue") 
+            },
+            {
+                path: "/client-nr",
+                name: "clientNormalReporte",
+                component:  () =>
+                import("./views/evento/usuario/ReporteRegistro.vue") 
+            },
             {
                 path: "/admin-s",
                 name: "AdminSemInicio",
@@ -180,12 +191,51 @@ const routes = [
                     }
                 },
             },
+            
             {
                 path: "/admin-e",
                 name: "adminEventInicio",
                 component: () =>
                     import(
                         "./views/evento/usuario/administradorEvento/AdministradorEventoInicio.vue"
+                    ),
+                beforeEnter(to, from, next) {
+                    if (auth.getUserRole() == "administratorMainSem") {
+                        next();
+                    } else {
+                        if (auth.getUserRole() == "administratorSem") {
+                            next("/admin-s");
+                        } else if (auth.getUserRole() == "user") {
+                            next("/client-n");
+                        }
+                    }
+                },
+            },
+            {
+                path: "/admin-ee",
+                name: "adminEstudiante",
+                component: () =>
+                    import(
+                        "./views/evento/usuario/administradorEvento/AdministradorEstudiante.vue"
+                    ),
+                beforeEnter(to, from, next) {
+                    if (auth.getUserRole() == "administratorMainSem") {
+                        next();
+                    } else {
+                        if (auth.getUserRole() == "administratorSem") {
+                            next("/admin-s");
+                        } else if (auth.getUserRole() == "user") {
+                            next("/client-n");
+                        }
+                    }
+                },
+            },
+            {
+                path: "/admin-eu",
+                name: "adminUsuarioInicio",
+                component: () =>
+                    import(
+                        "./views/evento/usuario/administradorEvento/AdministratorUsuario.vue"
                     ),
                 beforeEnter(to, from, next) {
                     if (auth.getUserRole() == "administratorMainSem") {

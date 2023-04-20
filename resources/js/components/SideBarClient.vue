@@ -107,6 +107,20 @@ export default {
       },
       {
         action: "assignment",
+        title: "Estudiantes",
+        route: "/admin-ee",
+        role: "administratorMainSem",
+       
+      },
+      {
+        action: "assignment",
+        title: "Usuarios",
+        route: "/admin-eu",
+        role: "administratorMainSem",
+       
+      },
+      {
+        action: "assignment",
         title: "Entregas",
         route: "/admin-s",
         role: "administratorSem",
@@ -126,8 +140,20 @@ export default {
       },
       {
         action: "assignment",
+        title: "Mis puntos",
+      route: "/client-np",
+        role: "user",
+      },
+      {
+        action: "assignment",
         title: "Cargar horarios",
       route: "/clientHorario",
+        role: "user",
+      },
+      {
+        action: "assignment",
+        title: "Reportes",
+      route: "/client-nr",
         role: "user",
       },
       {

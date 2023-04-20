@@ -20,7 +20,7 @@ class AsignacionEvento extends Model
         'created_at',
         'updated_at',
     ];
-    protected $hidden = ['idEBycrypt','asiEstado','fechaEntrega','id_estudiante'];
+    protected $hidden = ['idEBycrypt','asiEstado','fechaEntrega'];
     public function relacionEvento(){
         return $this->belongsTo(Evento::class, 'id_evento');
     }
@@ -31,6 +31,9 @@ class AsignacionEvento extends Model
     public function relacionEstudianteEvento(){
         return $this->belongsTo(Estudiante::class, 'id_estudiante')->select(['id', 'esNombres', 'esPaterno', 'esMaterno']);
 
+    }
+    public function relacionPuntos(){
+        return $this->hasMany(AsignacionPuntos::class,'id_asignacion_evento');
     }
     public function getCreatedAtAttribute($value)
     {

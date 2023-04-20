@@ -1,10 +1,17 @@
 import {http} from './http_service';
 import jwt from 'jsonwebtoken';
 import store from '../store'
+
+
+export function registerUser(data){
+    return http().post('/registerUser',data)
+}
 export function resetPasswordRequest(user) {
     return http().post('/auth/reset-password-request', user);
 }
-
+export function users(){
+    return http().get('/users')
+}
 export function resetPassword(user) {
     return http().post('/auth/reset-password', user);
 }

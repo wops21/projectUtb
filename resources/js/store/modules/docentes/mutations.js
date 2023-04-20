@@ -33,7 +33,8 @@ export default {
     },
     limpiarReporteP3(state){
         state.reporteP3 = [];
-    }
+    },
+
 
     
 }

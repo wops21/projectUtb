@@ -520,6 +520,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -528,6 +542,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   data: function data() {
     return {
+      dialogEditTipo: false,
+      dialogNewTipo: false,
       buscador1: "",
       viewAddEvento: "",
       viewEditEvento: "",
@@ -540,43 +556,38 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       date2: "",
       modal1: false,
       modal2: false,
-      buscador: '',
+      buscador: "",
       overlay: true,
       eventoData: {
-        id_tipoEvento: '',
-        lugar: '',
-        orador: '',
-        horaAcademica: '',
-        fechaInicio: '',
-        fechaFinal: '',
-        nombreEvento: ''
+        id_tipoEvento: "",
+        lugar: "",
+        orador: "",
+        horaAcademica: "",
+        fechaInicio: "",
+        fechaFinal: "",
+        nombreEvento: "",
+        costo: ""
       },
       tipoEventos: [],
-      valid: '',
+      valid: "",
       editEvento: {},
-      viewTipoEvnto: '',
+      editTipo: {},
+      viewTipoEvento: "",
       headers: [{
-        text: 'id',
-        value: 'id'
+        text: "id",
+        value: "id"
       }, {
-        text: 'nombre',
-        value: 'tipoEvento'
+        text: "nombre",
+        value: "tipoEvento"
       }, {
-        text: 'actions',
-        value: 'actions'
+        text: "actions",
+        value: "actions"
       }],
       editedIndex: -1,
-      tipoEvento: {
-        nombreEvento: ''
-      },
-      dialog: false,
-      dialogDelete: false
+      tipo: {
+        tipoEvento: ""
+      }
     };
-  },
-  computed: {
-    formTitle: function formTitle() {
-      return this.editedIndex === -1 ? 'Nueva categoria' : 'Editar categoria';
-    }
   },
   mounted: function mounted() {
     this.loadEvento();
@@ -702,11 +713,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 formData.append("fechaInicio", _this4.eventoData.fechaInicio);
                 formData.append("fechaFinal", _this4.eventoData.fechaFinal);
                 formData.append("nombreEvento", _this4.eventoData.nombreEvento);
+                formData.append("costo", _this4.eventoData.costo);
                 formData.append("eventEstado", 1);
-                _context4.next = 12;
+                _context4.next = 13;
                 return _services_evento_service__WEBPACK_IMPORTED_MODULE_0__.createEvento(formData);
 
-              case 12:
+              case 13:
                 _this4.loadEvento();
 
                 _this4.hideViewDialogAddEvento();
@@ -717,11 +729,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   text: "Usted ha actualizado exitosamente"
                 });
 
-                _context4.next = 20;
+                _context4.next = 21;
                 break;
 
-              case 17:
-                _context4.prev = 17;
+              case 18:
+                _context4.prev = 18;
                 _context4.t0 = _context4["catch"](0);
 
                 _this4.$swal({
@@ -730,15 +742,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   text: "".concat(_context4.t0)
                 });
 
-              case 20:
+              case 21:
               case "end":
                 return _context4.stop();
             }
           }
-        }, _callee4, null, [[0, 17]]);
+        }, _callee4, null, [[0, 18]]);
       }))();
     },
-    updateEvento: function updateEvento() {
+    updateTipo: function updateTipo() {
       var _this5 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5() {
@@ -748,34 +760,35 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _context5.prev = 0;
                 _context5.next = 3;
-                return _services_evento_service__WEBPACK_IMPORTED_MODULE_0__.updateEvento(_this5.editEvento.id, _this5.editEvento);
+                return _services_evento_service__WEBPACK_IMPORTED_MODULE_0__.updateTipo(_this5.editTipo.id, _this5.editTipo);
 
               case 3:
+                _this5.loadTipoEvento();
+
+                _this5.hidedialogEditTipo();
+
                 _this5.$swal({
                   icon: "success",
-                  title: "Registro exitoso",
-                  text: "Usted ha actualizado exitosamente"
+                  title: "Registro exitosamente",
+                  text: "Usted ha registrado exitosamente"
                 });
-
-                _this5.hideViewDialogEditEvento();
 
                 _context5.next = 10;
                 break;
 
-              case 7:
-                _context5.prev = 7;
+              case 8:
+                _context5.prev = 8;
                 _context5.t0 = _context5["catch"](0);
-                console.log(_context5.t0);
 
               case 10:
               case "end":
                 return _context5.stop();
             }
           }
-        }, _callee5, null, [[0, 7]]);
+        }, _callee5, null, [[0, 8]]);
       }))();
     },
-    desactivarEvento: function desactivarEvento(evento) {
+    deleteTipo: function deleteTipo(tipo) {
       var _this6 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee7() {
@@ -784,13 +797,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context7.prev = _context7.next) {
               case 0:
                 Swal.fire({
-                  title: "Esta seguro de desactivar el evento?",
+                  title: "Esta seguro de eliminar la categoria?",
                   text: "¡No podrás revertir esto!",
                   icon: "warning",
                   showCancelButton: true,
                   confirmButtonColor: "#3085d6",
                   cancelButtonColor: "#d33",
-                  confirmButtonText: "¡Sí, desactivar!"
+                  confirmButtonText: "¡Sí, eliminar!"
                 }).then( /*#__PURE__*/function () {
                   var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee6(result) {
                     return _regeneratorRuntime().wrap(function _callee6$(_context6) {
@@ -803,7 +816,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                             }
 
                             _context6.next = 3;
-                            return _services_evento_service__WEBPACK_IMPORTED_MODULE_0__.desactivarEvento(evento.id);
+                            return _services_evento_service__WEBPACK_IMPORTED_MODULE_0__.deleteTipo(tipo.id);
 
                           case 3:
                             _this6.loadEvento();
@@ -831,30 +844,197 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee7);
       }))();
     },
-    editItem: function editItem(item) {
-      this.editedIndex = this.tipoEventos.indexOf(item.id);
-      console.log(this.editedIndex);
-      this.tipoEvento = Object.assign({}, item);
-      console.log(this.tipoEvento);
-      this.dialog = true;
-    },
-    close: function close() {
+    deleteEvento: function deleteEvento(evento) {
       var _this7 = this;
 
-      this.dialog = false;
-      this.$nextTick(function () {
-        _this7.editedItem = Object.assign({}, _this7.defaultItem);
-        _this7.editedIndex = -1;
-      });
-    },
-    save: function save() {
-      if (this.editedIndex > -1) {
-        Object.assign(this.desserts[this.editedIndex], this.editedItem);
-      } else {
-        this.desserts.push(this.editedItem);
-      }
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee9() {
+        return _regeneratorRuntime().wrap(function _callee9$(_context9) {
+          while (1) {
+            switch (_context9.prev = _context9.next) {
+              case 0:
+                Swal.fire({
+                  title: "Esta seguro de eliminar el evento?",
+                  text: "¡No podrás revertir esto!",
+                  icon: "warning",
+                  showCancelButton: true,
+                  confirmButtonColor: "#3085d6",
+                  cancelButtonColor: "#d33",
+                  confirmButtonText: "¡Sí, eliminar!"
+                }).then( /*#__PURE__*/function () {
+                  var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee8(result) {
+                    return _regeneratorRuntime().wrap(function _callee8$(_context8) {
+                      while (1) {
+                        switch (_context8.prev = _context8.next) {
+                          case 0:
+                            if (!result.isConfirmed) {
+                              _context8.next = 5;
+                              break;
+                            }
 
-      this.close();
+                            _context8.next = 3;
+                            return _services_evento_service__WEBPACK_IMPORTED_MODULE_0__.deleteEvento(evento.id);
+
+                          case 3:
+                            _this7.loadEvento();
+
+                            Swal.fire("Confirmado!", "Se ha generado su carta con exito.", "success");
+
+                          case 5:
+                          case "end":
+                            return _context8.stop();
+                        }
+                      }
+                    }, _callee8);
+                  }));
+
+                  return function (_x2) {
+                    return _ref2.apply(this, arguments);
+                  };
+                }());
+
+              case 1:
+              case "end":
+                return _context9.stop();
+            }
+          }
+        }, _callee9);
+      }))();
+    },
+    updateEvento: function updateEvento() {
+      var _this8 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee10() {
+        return _regeneratorRuntime().wrap(function _callee10$(_context10) {
+          while (1) {
+            switch (_context10.prev = _context10.next) {
+              case 0:
+                _context10.prev = 0;
+                _context10.next = 3;
+                return _services_evento_service__WEBPACK_IMPORTED_MODULE_0__.updateEvento(_this8.editEvento.id, _this8.editEvento);
+
+              case 3:
+                _this8.$swal({
+                  icon: "success",
+                  title: "Registro exitoso",
+                  text: "Usted ha actualizado exitosamente"
+                });
+
+                _this8.hideViewDialogEditEvento();
+
+                _this8.loadEvento();
+
+                _context10.next = 11;
+                break;
+
+              case 8:
+                _context10.prev = 8;
+                _context10.t0 = _context10["catch"](0);
+                console.log(_context10.t0);
+
+              case 11:
+              case "end":
+                return _context10.stop();
+            }
+          }
+        }, _callee10, null, [[0, 8]]);
+      }))();
+    },
+    desactivarEvento: function desactivarEvento(evento) {
+      var _this9 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee12() {
+        return _regeneratorRuntime().wrap(function _callee12$(_context12) {
+          while (1) {
+            switch (_context12.prev = _context12.next) {
+              case 0:
+                Swal.fire({
+                  title: "Esta seguro de desactivar el evento?",
+                  text: "¡No podrás revertir esto!",
+                  icon: "warning",
+                  showCancelButton: true,
+                  confirmButtonColor: "#3085d6",
+                  cancelButtonColor: "#d33",
+                  confirmButtonText: "¡Sí, desactivar!"
+                }).then( /*#__PURE__*/function () {
+                  var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee11(result) {
+                    return _regeneratorRuntime().wrap(function _callee11$(_context11) {
+                      while (1) {
+                        switch (_context11.prev = _context11.next) {
+                          case 0:
+                            if (!result.isConfirmed) {
+                              _context11.next = 5;
+                              break;
+                            }
+
+                            _context11.next = 3;
+                            return _services_evento_service__WEBPACK_IMPORTED_MODULE_0__.desactivarEvento(evento.id);
+
+                          case 3:
+                            _this9.loadEvento();
+
+                            Swal.fire("Confirmado!", "Se ha generado su carta con exito.", "success");
+
+                          case 5:
+                          case "end":
+                            return _context11.stop();
+                        }
+                      }
+                    }, _callee11);
+                  }));
+
+                  return function (_x3) {
+                    return _ref3.apply(this, arguments);
+                  };
+                }());
+
+              case 1:
+              case "end":
+                return _context12.stop();
+            }
+          }
+        }, _callee12);
+      }))();
+    },
+    createTipo: function createTipo() {
+      var _this10 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee13() {
+        var formData;
+        return _regeneratorRuntime().wrap(function _callee13$(_context13) {
+          while (1) {
+            switch (_context13.prev = _context13.next) {
+              case 0:
+                _context13.prev = 0;
+                formData = new FormData();
+                formData.append("tipoEvento", _this10.tipo.tipoEvento);
+                _context13.next = 5;
+                return _services_evento_service__WEBPACK_IMPORTED_MODULE_0__.createTipo(formData);
+
+              case 5:
+                _this10.hideDialogNewTipo();
+
+                _this10.loadTipoEvento();
+
+                _this10.$swal({
+                  icon: "success",
+                  title: "Registro exitosamente",
+                  text: "Usted ha registrado exitosamente"
+                });
+
+                _context13.next = 12;
+                break;
+
+              case 10:
+                _context13.prev = 10;
+                _context13.t0 = _context13["catch"](0);
+
+              case 12:
+              case "end":
+                return _context13.stop();
+            }
+          }
+        }, _callee13, null, [[0, 10]]);
+      }))();
     },
     onPageChange: function onPageChange() {
       this.loadEvento();
@@ -875,11 +1055,27 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.showViewDialogEditEvento();
       this.editEvento = _objectSpread({}, evento);
     },
+    editTipoEvento: function editTipoEvento(tipo) {
+      this.showdialogEditTipo();
+      this.editTipo = _objectSpread({}, tipo);
+    },
+    showDialogNewTipo: function showDialogNewTipo() {
+      this.dialogNewTipo = true;
+    },
+    hideDialogNewTipo: function hideDialogNewTipo() {
+      this.dialogNewTipo = false;
+    },
     showViewTipoEvento: function showViewTipoEvento() {
-      this.viewTipoEvnto = true;
+      this.viewTipoEvento = true;
     },
     hideViewTipoEvento: function hideViewTipoEvento() {
-      this.viewTipoEvnto = false;
+      this.viewTipoEvento = false;
+    },
+    showdialogEditTipo: function showdialogEditTipo() {
+      this.dialogEditTipo = true;
+    },
+    hidedialogEditTipo: function hidedialogEditTipo() {
+      this.dialogEditTipo = false;
     }
   }
 });
@@ -1312,6 +1508,8 @@ var render = function () {
                         _vm._v(" "),
                         _c("th", [_vm._v("Hora Academica")]),
                         _vm._v(" "),
+                        _c("th", [_vm._v("Costo")]),
+                        _vm._v(" "),
                         _c("th", [_vm._v("Estado")]),
                         _vm._v(" "),
                         _c("th", [_vm._v("Acciones")]),
@@ -1340,6 +1538,8 @@ var render = function () {
                           _vm._v(" "),
                           _c("td", [_vm._v(_vm._s(evento.horaAcademica))]),
                           _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(evento.costo))]),
+                          _vm._v(" "),
                           _c(
                             "td",
                             [
@@ -1362,9 +1562,18 @@ var render = function () {
                           _c(
                             "td",
                             [
-                              _c("v-icon", { attrs: { color: "red" } }, [
-                                _vm._v("delete"),
-                              ]),
+                              _c(
+                                "v-icon",
+                                {
+                                  attrs: { color: "red" },
+                                  on: {
+                                    click: function ($event) {
+                                      return _vm.deleteEvento(evento)
+                                    },
+                                  },
+                                },
+                                [_vm._v("delete")]
+                              ),
                               _vm._v(" "),
                               _c(
                                 "v-icon",
@@ -1761,7 +1970,11 @@ var render = function () {
                                             },
                                           },
                                         },
-                                        [_vm._v(" OK ")]
+                                        [
+                                          _vm._v(
+                                            "\n                    OK\n                  "
+                                          ),
+                                        ]
                                       ),
                                     ],
                                     1
@@ -1898,7 +2111,11 @@ var render = function () {
                                             },
                                           },
                                         },
-                                        [_vm._v(" OK ")]
+                                        [
+                                          _vm._v(
+                                            "\n                    OK\n                  "
+                                          ),
+                                        ]
                                       ),
                                     ],
                                     1
@@ -1906,6 +2123,30 @@ var render = function () {
                                 ],
                                 1
                               ),
+                            ],
+                            1
+                          ),
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-row",
+                        [
+                          _c(
+                            "v-col",
+                            { attrs: { cols: "12", sm: "4", md: "4" } },
+                            [
+                              _c("v-text-field", {
+                                attrs: { label: "Costo", prefix: "Bs." },
+                                model: {
+                                  value: _vm.eventoData.costo,
+                                  callback: function ($$v) {
+                                    _vm.$set(_vm.eventoData, "costo", $$v)
+                                  },
+                                  expression: "eventoData.costo",
+                                },
+                              }),
                             ],
                             1
                           ),
@@ -2086,7 +2327,8 @@ var render = function () {
                                   rules: [
                                     function (v) {
                                       return (
-                                        !!v || "Debe seleccionar una carrera"
+                                        !!v ||
+                                        "Debe seleccionar una tipo de evento"
                                       )
                                     },
                                   ],
@@ -2271,11 +2513,18 @@ var render = function () {
                                                     required: "",
                                                   },
                                                   model: {
-                                                    value: _vm.date1,
+                                                    value:
+                                                      _vm.editEvento
+                                                        .fechaInicio,
                                                     callback: function ($$v) {
-                                                      _vm.date1 = $$v
+                                                      _vm.$set(
+                                                        _vm.editEvento,
+                                                        "fechaInicio",
+                                                        $$v
+                                                      )
                                                     },
-                                                    expression: "date1",
+                                                    expression:
+                                                      "editEvento.fechaInicio",
                                                   },
                                                 },
                                                 "v-text-field",
@@ -2304,11 +2553,15 @@ var render = function () {
                                     {
                                       attrs: { scrollable: "" },
                                       model: {
-                                        value: _vm.date1,
+                                        value: _vm.editEvento.fechaInicio,
                                         callback: function ($$v) {
-                                          _vm.date1 = $$v
+                                          _vm.$set(
+                                            _vm.editEvento,
+                                            "fechaInicio",
+                                            $$v
+                                          )
                                         },
-                                        expression: "date1",
+                                        expression: "editEvento.fechaInicio",
                                       },
                                     },
                                     [
@@ -2334,12 +2587,16 @@ var render = function () {
                                           on: {
                                             click: function ($event) {
                                               return _vm.$refs.dialogF1.save(
-                                                _vm.date1
+                                                _vm.editEvento.fechaInicio
                                               )
                                             },
                                           },
                                         },
-                                        [_vm._v(" OK ")]
+                                        [
+                                          _vm._v(
+                                            "\n                    OK\n                  "
+                                          ),
+                                        ]
                                       ),
                                     ],
                                     1
@@ -2408,11 +2665,17 @@ var render = function () {
                                                     required: "",
                                                   },
                                                   model: {
-                                                    value: _vm.date2,
+                                                    value:
+                                                      _vm.editEvento.fechaFinal,
                                                     callback: function ($$v) {
-                                                      _vm.date2 = $$v
+                                                      _vm.$set(
+                                                        _vm.editEvento,
+                                                        "fechaFinal",
+                                                        $$v
+                                                      )
                                                     },
-                                                    expression: "date2",
+                                                    expression:
+                                                      "editEvento.fechaFinal",
                                                   },
                                                 },
                                                 "v-text-field",
@@ -2441,11 +2704,15 @@ var render = function () {
                                     {
                                       attrs: { scrollable: "" },
                                       model: {
-                                        value: _vm.date2,
+                                        value: _vm.editEvento.fechaFinal,
                                         callback: function ($$v) {
-                                          _vm.date2 = $$v
+                                          _vm.$set(
+                                            _vm.editEvento,
+                                            "fechaFinal",
+                                            $$v
+                                          )
                                         },
-                                        expression: "date2",
+                                        expression: "editEvento.fechaFinal",
                                       },
                                     },
                                     [
@@ -2471,12 +2738,16 @@ var render = function () {
                                           on: {
                                             click: function ($event) {
                                               return _vm.$refs.dialogF.save(
-                                                _vm.date2
+                                                _vm.editEvento.fechaFinal
                                               )
                                             },
                                           },
                                         },
-                                        [_vm._v(" OK ")]
+                                        [
+                                          _vm._v(
+                                            "\n                    OK\n                  "
+                                          ),
+                                        ]
                                       ),
                                     ],
                                     1
@@ -2484,6 +2755,30 @@ var render = function () {
                                 ],
                                 1
                               ),
+                            ],
+                            1
+                          ),
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-row",
+                        [
+                          _c(
+                            "v-col",
+                            { attrs: { cols: "12", sm: "4", md: "4" } },
+                            [
+                              _c("v-text-field", {
+                                attrs: { label: "Costo", prefix: "Bs." },
+                                model: {
+                                  value: _vm.editEvento.costo,
+                                  callback: function ($$v) {
+                                    _vm.$set(_vm.editEvento, "costo", $$v)
+                                  },
+                                  expression: "editEvento.costo",
+                                },
+                              }),
                             ],
                             1
                           ),
@@ -2581,11 +2876,11 @@ var render = function () {
         {
           attrs: { "max-width": "800" },
           model: {
-            value: _vm.viewTipoEvnto,
+            value: _vm.viewTipoEvento,
             callback: function ($$v) {
-              _vm.viewTipoEvnto = $$v
+              _vm.viewTipoEvento = $$v
             },
-            expression: "viewTipoEvnto",
+            expression: "viewTipoEvento",
           },
         },
         [
@@ -2602,7 +2897,7 @@ var render = function () {
                   _c(
                     "v-toolbar-title",
                     { staticClass: "blue darken-2 white--text" },
-                    [_vm._v("Registro del evento\n          ")]
+                    [_vm._v("Registro del evento\n        ")]
                   ),
                   _vm._v(" "),
                   _c(
@@ -2659,7 +2954,6 @@ var render = function () {
                                     label: "Buscador",
                                     "append-icon": "search",
                                   },
-                                  on: { input: _vm.loadBuscador },
                                   model: {
                                     value: _vm.buscador1,
                                     callback: function ($$v) {
@@ -2699,7 +2993,7 @@ var render = function () {
                                               ),
                                               [
                                                 _vm._v(
-                                                  "\n            Nueva categoria\n          "
+                                                  "\n                    Nueva categoria\n                  "
                                                 ),
                                               ]
                                             ),
@@ -2708,67 +3002,85 @@ var render = function () {
                                       },
                                     ]),
                                     model: {
-                                      value: _vm.dialog,
+                                      value: _vm.dialogNewTipo,
                                       callback: function ($$v) {
-                                        _vm.dialog = $$v
+                                        _vm.dialogNewTipo = $$v
                                       },
-                                      expression: "dialog",
+                                      expression: "dialogNewTipo",
                                     },
                                   },
                                   [
                                     _vm._v(" "),
                                     _c(
-                                      "v-card",
+                                      "v-form",
+                                      {
+                                        on: {
+                                          submit: function ($event) {
+                                            $event.preventDefault()
+                                            return _vm.createTipo.apply(
+                                              null,
+                                              arguments
+                                            )
+                                          },
+                                        },
+                                      },
                                       [
-                                        _c("v-card-title", [
-                                          _c(
-                                            "span",
-                                            { staticClass: "text-h5" },
-                                            [_vm._v(_vm._s(_vm.formTitle))]
-                                          ),
-                                        ]),
-                                        _vm._v(" "),
                                         _c(
-                                          "v-card-text",
+                                          "v-card",
                                           [
+                                            _c("v-card-title", [
+                                              _vm._v(
+                                                "\n                   Nueva categoria de evento\n                  "
+                                              ),
+                                            ]),
+                                            _vm._v(" "),
                                             _c(
-                                              "v-container",
+                                              "v-card-text",
                                               [
                                                 _c(
-                                                  "v-row",
-                                                  { staticClass: "ml-auto" },
+                                                  "v-container",
                                                   [
                                                     _c(
-                                                      "v-col",
+                                                      "v-row",
                                                       {
-                                                        attrs: {
-                                                          cols: "12",
-                                                          sm: "8",
-                                                          md: "8",
-                                                        },
+                                                        staticClass: "ml-auto",
                                                       },
                                                       [
-                                                        _c("v-text-field", {
-                                                          attrs: {
-                                                            label: "nombre",
-                                                          },
-                                                          model: {
-                                                            value:
-                                                              _vm.tipoEvento
-                                                                .nombreEvento,
-                                                            callback: function (
-                                                              $$v
-                                                            ) {
-                                                              _vm.$set(
-                                                                _vm.tipoEvento,
-                                                                "nombreEvento",
-                                                                $$v
-                                                              )
+                                                        _c(
+                                                          "v-col",
+                                                          {
+                                                            attrs: {
+                                                              cols: "12",
+                                                              sm: "8",
+                                                              md: "8",
                                                             },
-                                                            expression:
-                                                              "tipoEvento.nombreEvento",
                                                           },
-                                                        }),
+                                                          [
+                                                            _c("v-text-field", {
+                                                              attrs: {
+                                                                label: "nombre",
+                                                              },
+                                                              model: {
+                                                                value:
+                                                                  _vm.tipo
+                                                                    .tipoEvento,
+                                                                callback:
+                                                                  function (
+                                                                    $$v
+                                                                  ) {
+                                                                    _vm.$set(
+                                                                      _vm.tipo,
+                                                                      "tipoEvento",
+                                                                      $$v
+                                                                    )
+                                                                  },
+                                                                expression:
+                                                                  "tipo.tipoEvento",
+                                                              },
+                                                            }),
+                                                          ],
+                                                          1
+                                                        ),
                                                       ],
                                                       1
                                                     ),
@@ -2778,45 +3090,40 @@ var render = function () {
                                               ],
                                               1
                                             ),
-                                          ],
-                                          1
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "v-card-actions",
-                                          [
-                                            _c("v-spacer"),
                                             _vm._v(" "),
                                             _c(
-                                              "v-btn",
-                                              {
-                                                attrs: {
-                                                  color: "blue darken-1",
-                                                  text: "",
-                                                },
-                                                on: { click: _vm.close },
-                                              },
+                                              "v-card-actions",
                                               [
-                                                _vm._v(
-                                                  "\n              Cancel\n            "
+                                                _c("v-spacer"),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "v-btn",
+                                                  {
+                                                    attrs: {
+                                                      color: "blue darken-1",
+                                                      text: "",
+                                                    },
+                                                    on: {
+                                                      click:
+                                                        _vm.hideDialogNewTipo,
+                                                    },
+                                                  },
+                                                  [_vm._v(" Cancelar ")]
                                                 ),
-                                              ]
-                                            ),
-                                            _vm._v(" "),
-                                            _c(
-                                              "v-btn",
-                                              {
-                                                attrs: {
-                                                  color: "blue darken-1",
-                                                  text: "",
-                                                },
-                                                on: { click: _vm.save },
-                                              },
-                                              [
-                                                _vm._v(
-                                                  "\n              Save\n            "
+                                                _vm._v(" "),
+                                                _c(
+                                                  "v-btn",
+                                                  {
+                                                    attrs: {
+                                                      color: "blue darken-1",
+                                                      text: "",
+                                                      type: "submit",
+                                                    },
+                                                  },
+                                                  [_vm._v(" Guardar ")]
                                                 ),
-                                              ]
+                                              ],
+                                              1
                                             ),
                                           ],
                                           1
@@ -2833,59 +3140,128 @@ var render = function () {
                                   {
                                     attrs: { "max-width": "500px" },
                                     model: {
-                                      value: _vm.dialogDelete,
+                                      value: _vm.dialogEditTipo,
                                       callback: function ($$v) {
-                                        _vm.dialogDelete = $$v
+                                        _vm.dialogEditTipo = $$v
                                       },
-                                      expression: "dialogDelete",
+                                      expression: "dialogEditTipo",
                                     },
                                   },
                                   [
                                     _c(
-                                      "v-card",
+                                      "v-form",
+                                      {
+                                        on: {
+                                          submit: function ($event) {
+                                            $event.preventDefault()
+                                            return _vm.updateTipo.apply(
+                                              null,
+                                              arguments
+                                            )
+                                          },
+                                        },
+                                      },
                                       [
                                         _c(
-                                          "v-card-title",
-                                          { staticClass: "text-h5" },
+                                          "v-card",
                                           [
-                                            _vm._v(
-                                              "Are you sure you want to delete this item?"
-                                            ),
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "v-card-actions",
-                                          [
-                                            _c("v-spacer"),
+                                            _c("v-card-title", [
+                                              _vm._v(
+                                                "\n                   Editar categoria de evento\n                  "
+                                              ),
+                                            ]),
                                             _vm._v(" "),
                                             _c(
-                                              "v-btn",
-                                              {
-                                                attrs: {
-                                                  color: "blue darken-1",
-                                                  text: "",
-                                                },
-                                                on: { click: _vm.closeDelete },
-                                              },
-                                              [_vm._v("Cancel")]
+                                              "v-card-text",
+                                              [
+                                                _c(
+                                                  "v-container",
+                                                  [
+                                                    _c(
+                                                      "v-row",
+                                                      {
+                                                        staticClass: "ml-auto",
+                                                      },
+                                                      [
+                                                        _c(
+                                                          "v-col",
+                                                          {
+                                                            attrs: {
+                                                              cols: "12",
+                                                              sm: "8",
+                                                              md: "8",
+                                                            },
+                                                          },
+                                                          [
+                                                            _c("v-text-field", {
+                                                              attrs: {
+                                                                label: "nombre",
+                                                              },
+                                                              model: {
+                                                                value:
+                                                                  _vm.editTipo
+                                                                    .tipoEvento,
+                                                                callback:
+                                                                  function (
+                                                                    $$v
+                                                                  ) {
+                                                                    _vm.$set(
+                                                                      _vm.editTipo,
+                                                                      "tipoEvento",
+                                                                      $$v
+                                                                    )
+                                                                  },
+                                                                expression:
+                                                                  "editTipo.tipoEvento",
+                                                              },
+                                                            }),
+                                                          ],
+                                                          1
+                                                        ),
+                                                      ],
+                                                      1
+                                                    ),
+                                                  ],
+                                                  1
+                                                ),
+                                              ],
+                                              1
                                             ),
                                             _vm._v(" "),
                                             _c(
-                                              "v-btn",
-                                              {
-                                                attrs: {
-                                                  color: "blue darken-1",
-                                                  text: "",
-                                                },
-                                                on: {
-                                                  click: _vm.deleteItemConfirm,
-                                                },
-                                              },
-                                              [_vm._v("OK")]
+                                              "v-card-actions",
+                                              [
+                                                _c("v-spacer"),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "v-btn",
+                                                  {
+                                                    attrs: {
+                                                      color: "blue darken-1",
+                                                      text: "",
+                                                    },
+                                                    on: {
+                                                      click:
+                                                        _vm.hideDialogNewTipo,
+                                                    },
+                                                  },
+                                                  [_vm._v(" Cancelar ")]
+                                                ),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "v-btn",
+                                                  {
+                                                    attrs: {
+                                                      color: "blue darken-1",
+                                                      text: "",
+                                                      type: "submit",
+                                                    },
+                                                  },
+                                                  [_vm._v(" Guardar ")]
+                                                ),
+                                              ],
+                                              1
                                             ),
-                                            _vm._v(" "),
-                                            _c("v-spacer"),
                                           ],
                                           1
                                         ),
@@ -2914,11 +3290,11 @@ var render = function () {
                                 attrs: { small: "" },
                                 on: {
                                   click: function ($event) {
-                                    return _vm.editItem(item)
+                                    return _vm.editTipoEvento(item)
                                   },
                                 },
                               },
-                              [_vm._v("\n      mdi-pencil\n    ")]
+                              [_vm._v(" mdi-pencil ")]
                             ),
                             _vm._v(" "),
                             _c(
@@ -2927,11 +3303,11 @@ var render = function () {
                                 attrs: { small: "" },
                                 on: {
                                   click: function ($event) {
-                                    return _vm.deleteItem(item)
+                                    return _vm.deleteTipo(item)
                                   },
                                 },
                               },
-                              [_vm._v("\n      mdi-delete\n    ")]
+                              [_vm._v(" mdi-delete ")]
                             ),
                           ]
                         },

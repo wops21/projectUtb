@@ -41,7 +41,7 @@ class EventoController extends Controller
  
      public function update(Request $request, Evento $evento){
         $request->validate([
-            'nombreEvento' => 'required|unique:eventos,nombreEvento',
+            'nombreEvento' => 'required',
              'fechaInicio' => 'required',
              'fechaFinal' => 'required',
              'lugar' => 'required',

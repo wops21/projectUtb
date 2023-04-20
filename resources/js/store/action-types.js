@@ -33,3 +33,5 @@ export const GET_REPORTE_DOCENTEAS = 'GET_REPORTE_DOCENTEAS';
 
 // autentificacion
 export const GET_AUTHENTICATE = 'GET_AUTHENTICATE';
+//reporte de admin event
+export const GET_REPORTE_EVENTO = 'GET_REPORTE_EVENTO';

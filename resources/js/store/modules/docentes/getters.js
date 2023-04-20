@@ -19,6 +19,7 @@ export default {
     },
     getReporteAs: state => {
         return state.reporteAs
-    }
+    },
+
     
 }

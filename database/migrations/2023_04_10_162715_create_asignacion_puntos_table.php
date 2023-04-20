@@ -18,7 +18,7 @@ class CreateAsignacionPuntosTable extends Migration
             $table->unsignedBigInteger('id_asignacion_evento');
             $table->unsignedBigInteger('id_horario_docente');
             $table->integer('cantidad_puntos');
-            $table->foreign('id_asignacion_evento')->references('id')->on('asignacion_eventos');
+            $table->foreign('id_asignacion_evento')->references('id')->on('asignacion_eventos')->delete('cascade');
             $table->foreign('id_horario_docente')->references('id')->on('horario_docentes');
             $table->timestamps();
         });

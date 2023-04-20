@@ -23,5 +23,17 @@ class TipoEventoController extends Controller
         $tipo->update($request->all());
         return response()->json($tipo,200);
     }
-    
+    public function destroy(TipoEvento $tipo){
+        if ($tipo->delete()) {
+            return response()->json([
+                "message" => "se ha eliminado exitosamente",
+                "status_code" => 200
+            ], 200);
+        } else {
+            return response()->json([
+                "message" => 'Ocurrio un error, intentelo otra vez por favor',
+                "status_code" => 500
+            ], 500);
+        }
+    }
 }

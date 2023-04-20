@@ -29,3 +29,5 @@ export const SET_REPORTE_DOCENTEAS = 'SET_REPORTE_DOCENTEAS';
 
 // autentificacion
 export const SET_AUTHENTICATION = 'SET_AUTHENTICATION';
+//Reporte main event
+export const SET_REPORTE_EVENTO = 'SET_REPORTE_EVENTO';

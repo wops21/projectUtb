@@ -22,6 +22,7 @@ class CreateEventosTable extends Migration
             $table->string('fechaFinal');
             $table->string('lugar');
             $table->integer('horaAcademica');
+            $table->integer('costo');
             $table->integer('eventEstado')->default(1);
             $table->timestamps();
             $table->foreign('id_tipoEvento')->references('id')->on('tipo_eventos');

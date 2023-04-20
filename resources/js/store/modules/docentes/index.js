@@ -9,7 +9,8 @@ const state = {
     reporteP2: [],
     reporteP3: [],
     reporteA: [],
-    reporteAs: []
+    reporteAs: [],
+
 }
 export default {
     actions,
